@@ -9,6 +9,9 @@ const public = path.join(__dirname, 'public');
 const db = new nedb({ filename: 'students.db', autoload: true});
 console.log('db created');
 
+const router = require('./routes/guestbookRoutes');
+app.use('/', router); 
+/*
 db.insert({
     student: 'Ann',
     age: 21,
@@ -58,21 +61,12 @@ db.update({ student: 'Ann', 'modules.name': 'routing'}, { $set: { "age": 23, "pr
         console.log('documents updated:', updatedDocs)
     }
 })
+*/
 app.use(express.static(public));
-app.get('/', function(req, res) {
- res.send('Hello! Welcome to my application.');
-})
-app.get('/guestbook', function(req, res) {
- res.send('<h1>Guestbook Messages</h1>');
-})
-app.get('/about', function(req, res) {
- res.sendFile(path.join(public, 'about.html'));
-})
-app.use(function(req, res) {
- res.status(404);
- res.send('Oops! We didn\'t find what you are looking for.');
-})
+/*
 
+
+*/
 app.listen(3000, function() {
     console.log('Server started on port 3000. Ctrl^c to quit.');
    })
