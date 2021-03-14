@@ -35,7 +35,29 @@ db.insert({
     }
 });
 
-db.find()
+db.find({"modules.name": 'stuffo'}, function(err, docs) {
+    console.log('retrieving docs with module security');
+    if (err) {
+        console.log('error');
+    } else {
+        console.log('documents retrieved:', docs)
+    }
+})
+db.remove({ student: 'Peter'}, {}, function(err, removedDocs) {
+    console.log('deleting the first peter');
+    if (err) {
+        console.log('error');
+    } else {
+        console.log('documents removed:', removedDocs)
+    }
+})
+db.update({ student: 'Ann', 'modules.name': 'routing'}, { $set: { "age": 23, "programme": "Computing" } }, {}, function(err, updatedDocs) {
+    if (err) {
+        console.log('error');
+    } else {
+        console.log('documents updated:', updatedDocs)
+    }
+})
 app.use(express.static(public));
 app.get('/', function(req, res) {
  res.send('Hello! Welcome to my application.');
