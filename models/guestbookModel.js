@@ -62,6 +62,24 @@ class GuestBook{
         })
     }
 
+    addEntry(author, subject, contents) {
+        var entry = {
+            author: author,
+            subject: subject,
+            contents: contents,
+            published: new Date().toISOString().split('T')[0]
+        }
+        console.log('entry created', entry);
+
+        this.db.insert(entry, function(err, doc) {
+            if (err) {
+                console.log('Error inserting document', subject);
+            } else {
+                console.log('document inserted into the database', doc);
+            }
+        })
+    }
+
 
 }
 

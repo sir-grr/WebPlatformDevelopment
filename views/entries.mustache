@@ -10,7 +10,19 @@
         <div>
             {{contents}}
         </div>
+        <div>
+            Written by {{author}} , on {{published}}
+        </div>
         <hr>
     {{/entries}}
+    {{^entries}}
+    No entries yet.
+    <hr>
+    {{/entries}}
+    <div class="text-right">
+    <a href="/new" class="btn btn-primary">
+         Write in the guestbook
+    </a>
+    </div>
 </body>
 </html>

@@ -10,6 +10,10 @@ router.get('/new', controller.new_entry);
 
 router.get('/peter', controller.peters_list);
 
+router.get('/new', controller.show_new_entries);
+
+router.post('/new', controller.post_new_entry); 
+
 router.get('/about', function(req, res) {
     res.redirect('/about.html');
 });

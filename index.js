@@ -3,8 +3,10 @@ const express = require('express');
 const mustache = require('mustache-express');
 const path = require('path');
 const nedb = require('nedb');
+const bodyParser = require('body-parser')
 
 const app = express();
+app.use(bodyParser.urlencoded({extended: false}));
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 const public = path.join(__dirname, 'public');
