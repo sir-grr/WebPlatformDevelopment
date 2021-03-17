@@ -14,3 +14,12 @@ before running this code be sure to use the following commands
 npm init
 npm install
 ```
+
+use either of these commands to run the prototype
+
+```
+node index.js
+nodemon index.js
+```
+
+and check the address localhost:3000 in your preferred browser to view the prototype running
