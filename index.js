@@ -2,7 +2,7 @@
 const express = require('express');
 const mustache = require('mustache-express');
 const path = require('path');
-const nedb = require('nedb');
+//const nedb = require('nedb');
 const bodyParser = require('body-parser')
 
 const app = express();
@@ -11,8 +11,10 @@ app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 const public = path.join(__dirname, 'public');
 //creates a db in a file titled students.db to run in memory mode don't add a filename
-const db = new nedb({ filename: 'students.db', autoload: true});
+//const db = new nedb({ filename: 'students.db', autoload: true});
 console.log('db created');
+
+app.use(express.static(public));
 
 const router = require('./routes/trainingCalenderRoutes');
 app.use('/', router);
@@ -67,7 +69,7 @@ db.update({ student: 'Ann', 'modules.name': 'routing'}, { $set: { "age": 23, "pr
     }
 })
 */
-app.use(express.static(public));
+
 /*
 
 

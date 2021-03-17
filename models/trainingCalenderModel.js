@@ -82,7 +82,34 @@ class TrainingCalender{
         })
     }
 
+    deleteFirstEntry(){
+        console.log('update through to model')
+        this.db.remove({ author: 'Ann'}, {}, function(err, removedDocs) {
+            console.log('deleting Anns first goal');
+            if (err) {
+                console.log('error');
+            } else {
+                console.log('documents removed:', removedDocs)
+            }
+        })
+    }
 
+    updateFirstEntry(author, goal, details, date){
+        console.log('update through to model')
+        this.db.update({author: 'Peter'}, { $set: { 'author': author, 'goal': goal, 'details': details,'dueDate': date } }, {}, function(err, updatedDocs) {
+            console.log('updating peters goals');
+            if (err) {
+                console.log('error');
+            } else {
+                console.log('documents updated:', updatedDocs)
+            }
+        })
+    }
+
+/*
+
+
+*/
 }
 
 module.exports = TrainingCalender;

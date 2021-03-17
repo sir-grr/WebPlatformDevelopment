@@ -1,16 +1,21 @@
-<head>
+<html>
+    <head>
     {{>header}}
-</head>
-<body>
-    <h1>{{title}}</h1>
-    {{#entries}}
-        <div>
+    </head>
+
+    <div class="wrapper">
+      {{>navbar}}
+        <main>
+            <div class="midnav">
+              <h3 class ="midbar">{{title}}</h3>
+              {{#entries}}
+        <div class ="midbar">
             {{goal}} due for - {{dueDate}}
         </div>
-        <div>
+        <div class ="midbar">
             {{details}}
         </div>
-        <div>
+        <div class ="midbar">
             Written by {{author}} 
         </div>
         <hr>
@@ -20,9 +25,14 @@
     <hr>
     {{/entries}}
     <div class="text-right">
-    <a href="/new" class="btn btn-primary">
+    <a href="/new" class="midbar">
         Add a goal
     </a>
+    </div>                
+            </div>
+        </main>
+        <footer>
+          <h4>© Treblig Inc 2021 | Thank you for visiting</h4>
+        </footer>
     </div>
-</body>
 </html>
