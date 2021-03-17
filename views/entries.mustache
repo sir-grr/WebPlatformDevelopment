@@ -5,13 +5,13 @@
     <h1>{{title}}</h1>
     {{#entries}}
         <div>
-            {{subject}}
+            {{goal}} due for - {{dueDate}}
         </div>
         <div>
-            {{contents}}
+            {{details}}
         </div>
         <div>
-            Written by {{author}} , on {{published}}
+            Written by {{author}} 
         </div>
         <hr>
     {{/entries}}
@@ -21,7 +21,7 @@
     {{/entries}}
     <div class="text-right">
     <a href="/new" class="btn btn-primary">
-         Write in the guestbook
+        Add a goal
     </a>
     </div>
 </body>

@@ -1,7 +1,7 @@
 const nedb = require('nedb');
 
 
-class GuestBook{
+class TrainingCalender{
 
     constructor(dbFilePath){
         if (dbFilePath){
@@ -13,27 +13,28 @@ class GuestBook{
     }
 
     init(){
-        this.db.insert({
-            subject: 'I liked the exhibition',
-            contents: 'nice',
-            published: '2020-02-16',
-            author: 'Peter'
-        });
-
         
+        this.db.insert({
+            author: 'Peter',
+            goal: 'arm Workout',
+            details: '10 bicep curls, 10 push ups, 10 tricep dips',
+            dueDate: '2021-05-05'
+        });
+    
         //for debugging
         console.log('db entry: Peter inserted');
-
+    
         this.db.insert({
-            subject: "Didn't like it",
-            contents: 'A really terrible style',
-            published: '2020-02-18',
-            author: 'Ann'
+            author: 'Ann',
+            goal: 'leg Workout',
+            details: '5km run',
+            dueDate: '2022-04-19'
         })
-
-        //for debugging
+    
+            //for debugging
         console.log('db entry: Ann inserted');
-    }//close init
+    }
+
 
     getAllEntries(){
 
@@ -43,13 +44,14 @@ class GuestBook{
                     reject(err);
                 } else {
                     resolve(entries);
-                    console.log('function all() returns: ', entries);
+                    console.log('function getAllEntries() returns: ', entries);
                 }
             })
         })
     }
+    
 
-    getPetersEntries(){
+    /*getPetersEntries(){
         return new Promise((resolve, reject) => {
             this.db.find({ author: 'Peter' }, function(err, entries) {
                 if (err){
@@ -60,20 +62,20 @@ class GuestBook{
                 }
             })
         })
-    }
+    }*/
 
-    addEntry(author, subject, contents) {
+    addEntry(author, goal, details, date) {
         var entry = {
             author: author,
-            subject: subject,
-            contents: contents,
-            published: new Date().toISOString().split('T')[0]
+            goal: goal,
+            details: details,
+            dueDate: date//new Date().toISOString().split('T')[0]
         }
         console.log('entry created', entry);
 
         this.db.insert(entry, function(err, doc) {
             if (err) {
-                console.log('Error inserting document', subject);
+                console.log('Error inserting goal', goal);
             } else {
                 console.log('document inserted into the database', doc);
             }
@@ -83,4 +85,4 @@ class GuestBook{
 
 }
 
-module.exports = GuestBook;
+module.exports = TrainingCalender;

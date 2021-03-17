@@ -1,21 +1,21 @@
 const express = require('express');
-const controller = require('../controllers/guestbookControllers.js'); 
+const controller = require('../controllers/trainingCalenderControllers.js'); 
 const router = express.Router();
 
 router.get("/", controller.landing_page);
 
-router.get('/guestbook', controller.entries_list);
+router.get('/trainingCalender', controller.entries_list);
 
 router.get('/new', controller.new_entry);
 
 router.get('/peter', controller.peters_list);
 
-router.get('/new', controller.show_new_entries);
+router.get('/seed', controller.seed_new_entries);
 
 router.post('/new', controller.post_new_entry); 
 
 router.get('/about', function(req, res) {
-    res.redirect('/about.html');
+    res.redirect('../about.html');
 });
    
 router.use(function(req, res) {

@@ -14,8 +14,8 @@ const public = path.join(__dirname, 'public');
 const db = new nedb({ filename: 'students.db', autoload: true});
 console.log('db created');
 
-const router = require('./routes/guestbookRoutes');
-app.use('/', router); 
+const router = require('./routes/trainingCalenderRoutes');
+app.use('/', router);
 /*
 db.insert({
     student: 'Ann',
