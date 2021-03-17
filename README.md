@@ -10,5 +10,5 @@ with planned update in the near future
 ## Usage
 before running this code be sure to use the following commands
 
-npm init
-npm install
+```npm init
+npm install```
