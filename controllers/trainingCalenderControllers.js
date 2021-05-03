@@ -34,6 +34,21 @@ exports.register_page = function(req, res) {
     res.render('register');
 }
 
+exports.show_user_entries = function(req, res) {
+    console.log('finding goals by', req.params.author);
+
+    let user = req.params.author;
+    db.getEntriesByUser(user).then((entries) =>{
+        res.render('entries', {
+            'title': 'Training Calendar',
+            'entries': entries
+        });
+    }).catch((err) => {
+        console.log('error handling author posts', err);
+    });
+}
+
+
 exports.new_entry = function(req, res) {
     res.render('newEntry', {
         'title': 'NewEntry'
@@ -56,6 +71,7 @@ exports.about = function(req, res) {
     res.redirect('/about.html');
 }
 
+//posts
 exports.post_new_entry = function(req, res) {
 
     if (!req.body.author) {

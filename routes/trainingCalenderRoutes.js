@@ -21,6 +21,8 @@ router.get('/seed', controller.seed_new_entries);
 
 router.get('/about', controller.about);
 
+router.get('/posts/:author', controller.show_user_entries); 
+
 //posts
 router.post('/new', controller.post_new_entry); 
 

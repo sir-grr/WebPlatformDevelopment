@@ -51,18 +51,18 @@ class TrainingCalender{
     }
     
 
-    /*getPetersEntries(){
+    getEntriesByUser(authorName){
         return new Promise((resolve, reject) => {
-            this.db.find({ author: 'Peter' }, function(err, entries) {
+            this.db.find({ author: authorName }, function(err, entries) {
                 if (err){
                     reject (err);
                 } else {
                     resolve(entries);
-                    console.log('getPetersEntries() returns: ', entries);
+                    console.log('getEntriesByUser() returns: ', entries);
                 }
             })
         })
-    }*/
+    }
 
     addEntry(author, goal, details, date) {
         var entry = {
@@ -106,10 +106,6 @@ class TrainingCalender{
         })
     }
 
-/*
-
-
-*/
 }
 
 module.exports = TrainingCalender;
