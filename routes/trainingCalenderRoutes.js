@@ -13,7 +13,7 @@ router.get('/register', controller.register_page);
 
 router.get('/new', controller.new_entry);
 
-router.get('/delete', controller.delete_entry);
+router.get('/delete/:id', controller.delete_entry);
 
 router.get('/update', controller.update_entry);
 

@@ -82,10 +82,10 @@ class TrainingCalender{
         })
     }
 
-    deleteFirstEntry(){
+    deleteEntry(id){
         console.log('update through to model')
-        this.db.remove({ author: 'Ann'}, {}, function(err, removedDocs) {
-            console.log('deleting Anns first goal');
+        this.db.remove({ _id : id}, {}, function(err, removedDocs) {
+            console.log('deleting entry');
             if (err) {
                 console.log('error');
             } else {

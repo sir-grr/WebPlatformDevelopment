@@ -56,9 +56,9 @@ exports.new_entry = function(req, res) {
 }
 
 exports.delete_entry = function(req, res) {
-    res.render('deleteEntry', {
-        'title': 'DeleteEntry'
-    });
+    console.log('id being deleted',req.params.id);
+    db.deleteEntry(req.params.id);
+    res.redirect('/');
 }
 
 exports.update_entry = function(req, res) {
