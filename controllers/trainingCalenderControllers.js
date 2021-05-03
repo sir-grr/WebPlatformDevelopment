@@ -1,4 +1,5 @@
 const trainingCalenderDAO = require('../models/trainingCalenderModel');
+const userDao = require('../models/userModel.js');
 const db = new trainingCalenderDAO('trainingCalender.db');
 
 exports.landing_page = function(req, res) {
@@ -27,11 +28,15 @@ exports.seed_new_entries = function(req, res) {
 }
 
 exports.login_page = function(req, res) {
-    res.render('login');
+    res.render('user/login', {
+        'title' : 'Login'
+    });
 }
 
 exports.register_page = function(req, res) {
-    res.render('register');
+    res.render('user/register', {
+        'title' : 'Register'
+    });
 }
 
 exports.show_user_entries = function(req, res) {
@@ -96,4 +101,31 @@ exports.post_update_entry = function(req, res) {
     db.updateFirstEntry(req.body.author, req.body.goal, req.body.details, req.body.dueDate);
     res.redirect('/');
 }
+
+exports.post_new_user = function(req, res) {
+    console.log('running pnu')
+    console.log(req.body.psw,req.body.username,req.body.pswrepeat);
+    const user = req.body.username;
+    const password = req.body.psw;
+    const passwordRepeat = req.body.pswrepeat;
+    //console.log("register user", user, "password", password);
+    if (!user || !password) {
+        res.send(401, 'no user or no password');
+        return;
+    }
+    else if(!(password == passwordRepeat)){
+        res.send(401, 'passwords do not match');
+        return;
+    }
+    //add else if for not matching
+
+    userDao.lookup(user, function(err, u) {
+        if (u) {
+            res.send(401, "User exists:", user);
+            return;
+        }
+        userDao.create(user, password);
+        res.redirect('/login');
+    });
+   } 
 

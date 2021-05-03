@@ -2,8 +2,12 @@
         <div class="topnav">
             <a href="/">Home</a>
             <a href="/new">Add a Goal</a>
-            <a href="/login">Login</a>
             <a href="/about">About</a>
-            
+            {{^user}}
+            <a id="login" href="/login"> Sign in </a>
+            {{/user}}
+            {{#user}}
+            <a id="logout" href="/logout"> Sign in </a>
+            {{/user}}
         </div>
     </header>

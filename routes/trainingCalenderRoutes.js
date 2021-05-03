@@ -30,6 +30,8 @@ router.post('/delete', controller.post_delete_entry);
 
 router.post('/update', controller.post_update_entry);
 
+router.post('/register', controller.post_new_user);
+
 //handling unkowns/Server errors
 router.use(function(req, res) {
     res.status(404);
