@@ -1,3 +1,4 @@
+const { response } = require('express');
 const trainingCalenderDAO = require('../models/trainingCalenderModel');
 const userDao = require('../models/userModel.js');
 const db = new trainingCalenderDAO('trainingCalender.db');
@@ -103,7 +104,7 @@ exports.post_update_entry = function(req, res) {
 }
 
 exports.post_new_user = function(req, res) {
-    console.log('running pnu')
+    console.log('running post_new_user')
     console.log(req.body.psw,req.body.username,req.body.pswrepeat);
     const user = req.body.username;
     const password = req.body.psw;
@@ -127,5 +128,10 @@ exports.post_new_user = function(req, res) {
         userDao.create(user, password);
         res.redirect('/login');
     });
-   } 
+}
+
+exports.post_login = function(req, res) {
+    console.log('running post_login')
+    res.redirect('/');
+}
 

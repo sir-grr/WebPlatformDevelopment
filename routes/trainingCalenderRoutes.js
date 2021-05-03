@@ -1,3 +1,4 @@
+const auth = require('../auth/auth')
 const express = require('express');
 const controller = require('../controllers/trainingCalenderControllers.js'); 
 const router = express.Router();
@@ -32,6 +33,8 @@ router.post('/update', controller.post_update_entry);
 
 router.post('/register', controller.post_new_user);
 
+router.post('/login', auth.authorize('/login'), controller.post_login)
+
 //handling unkowns/Server errors
 router.use(function(req, res) {
     res.status(404);
@@ -42,7 +45,7 @@ router.use(function(req, res) {
 router.use(function(err, req, res, next) {
     res.status(500);
     res.type('text/plain');
-    res.send('Internal Server Error.');
+    res.send('Internal Server Error.', err);
 })
 
 module.exports = router;

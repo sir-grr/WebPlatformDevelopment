@@ -1,14 +1,17 @@
 //import modules
 const express = require('express');
 const mustache = require('mustache-express');
+const passport = require('passport')
 const path = require('path');
+const auth = require('./auth/auth')
 //const nedb = require('nedb');
 const bodyParser = require('body-parser')
-
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
+auth.init(app);
+
 const public = path.join(__dirname, 'public');
 //creates a db in a file titled students.db to run in memory mode don't add a filename
 //const db = new nedb({ filename: 'students.db', autoload: true});
@@ -17,6 +20,8 @@ console.log('db created');
 app.use(express.static(public));
 
 const router = require('./routes/trainingCalenderRoutes');
+
+
 app.use('/', router);
 /*
 db.insert({

@@ -9,9 +9,10 @@
         <main>
             <div class="midnav">
               <h3 class ="midbar">{{title}}</h3>
+              <form method = "post" role="/register">
                     <div id = "midbar">
-                      <label for="email"><b>Email</b></label>
-                      <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                      <label for="username"><b>Username</b></label>
+                      <input type="text" placeholder="Enter username" name="username" id="username" required>
                     </div>
                     <div id = "midbar">
                       <label for="psw"><b>Password</b></label>
@@ -19,8 +20,9 @@
                     </div>
                     <div id = "midbar">
                       <a href="/register">Not signed up? Register</a>
-                      <p class ="midbar">Not Yet Implemented For User</p>
                     </div>
+                    <input type="submit" value="Sign In">
+              </form>
             </div>
         </main>
         <footer>
