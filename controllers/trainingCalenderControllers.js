@@ -7,6 +7,7 @@ exports.landing_page = function(req, res) {
     db.getAllEntries().then((list) => {
         res.render('entries', {
         'title': 'Training Calender',
+        'user': req.user, 
         'entries': list
         });
         console.log('promise resolved');
@@ -47,6 +48,7 @@ exports.show_user_entries = function(req, res) {
     db.getEntriesByUser(user).then((entries) =>{
         res.render('entries', {
             'title': 'Training Calendar',
+            'user': req.user,
             'entries': entries
         });
     }).catch((err) => {
@@ -132,6 +134,11 @@ exports.post_new_user = function(req, res) {
 
 exports.post_login = function(req, res) {
     console.log('running post_login')
+    res.redirect('/');
+}
+
+exports.logout = function(req, res){
+    req.logout();
     res.redirect('/');
 }
 

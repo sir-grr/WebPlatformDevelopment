@@ -5,7 +5,8 @@ const userModel = require('../models/userModel');
 
 exports.init = function(app) {
     // setup password
-    passport.use(new Strategy(
+    console.log('init auth')
+    passport.use(new Strategy( 
         function(username, password, cb) { // cb is callback
             userModel.lookup(username, function(err, user) {
                 console.log('lookup', username);
@@ -18,6 +19,7 @@ exports.init = function(app) {
                     return cb(null, false);
                 }
                 //compare provided password with stored password
+                console.log('comparing passwords')
                 bcrypt.compare(password, user.password,
                     function(err, result) {
                         if (result) {

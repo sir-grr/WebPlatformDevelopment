@@ -3,14 +3,23 @@ const express = require('express');
 const mustache = require('mustache-express');
 const passport = require('passport')
 const path = require('path');
+const session = require('express-session'); 
 const auth = require('./auth/auth')
 //const nedb = require('nedb');
 const bodyParser = require('body-parser')
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({ 
+    secret: 'dont tell anyone', 
+    resave: false,
+    saveUninitialized: false 
+})); 
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 auth.init(app);
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 const public = path.join(__dirname, 'public');
 //creates a db in a file titled students.db to run in memory mode don't add a filename
@@ -18,7 +27,6 @@ const public = path.join(__dirname, 'public');
 console.log('db created');
 
 app.use(express.static(public));
-
 const router = require('./routes/trainingCalenderRoutes');
 
 

@@ -10,6 +10,8 @@ router.get("/home", controller.landing_page);
 
 router.get('/login', controller.login_page);
 
+router.get('/logout', controller.logout);
+
 router.get('/register', controller.register_page);
 
 router.get('/new', controller.new_entry);
