@@ -9,30 +9,33 @@ router.get("/", controller.landing_page);
 
 router.get("/home", controller.landing_page);
 
-router.get('/login', controller.login_page);
+router.get('/calendar', controller.calendar_page);
 
-router.get('/logout', controller.logout);
+router.get('/login', controller.login_page);
 
 router.get('/register', controller.register_page);
 
-router.get('/new', ensureLoggedIn('/login'), controller.new_entry);
+router.get('/logout', controller.logout);
 
-router.get('/delete/:id', controller.delete_entry);
+router.get('/new', ensureLoggedIn('/login'), controller.new_goal);
 
-router.get('/update', controller.update_entry);
+router.get('/update/:id', ensureLoggedIn('/login'), controller.update_goal);
 
-router.get('/seed', controller.seed_new_entries);
+router.get('/delete/:id', controller.delete_goal);
+
+router.get('/complete/:id', controller.complete_goal);
+
+router.get('/seed', controller.seed_new_goals);
 
 router.get('/about', controller.about);
 
-router.get('/posts/:author', controller.show_user_entries); 
+router.get('/goals/:author', ensureLoggedIn('/login'), controller.show_user_goals); 
 
+router.get('/goals/:author/:passphrase', ensureLoggedIn('/login'), controller.show_user_goals);
 //posts
-router.post('/new', ensureLoggedIn('/login'), controller.post_new_entry); 
+router.post('/new', ensureLoggedIn('/login'), controller.post_new_goal); 
 
-router.post('/delete', controller.post_delete_entry);
-
-router.post('/update', controller.post_update_entry);
+router.post('/update', controller.post_update_goal);
 
 router.post('/register', controller.post_new_user);
 

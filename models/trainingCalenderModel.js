@@ -20,62 +20,65 @@ class TrainingCalender{
             author: 'Peter',
             goal: 'arm Workout',
             details: '10 bicep curls, 10 push ups, 10 tricep dips',
+            complete: false,
             dueDate: '2021-05-05'
         });
     
         //for debugging
-        console.log('db entry: Peter inserted');
+        console.log('db goal: Peter inserted');
     
         this.db.insert({
             author: 'Ann',
             goal: 'leg Workout',
             details: '5km run',
+            complete: true,
             dueDate: '2022-04-19'
         })
     
             //for debugging
-        console.log('db entry: Ann inserted');
+        console.log('db goal: Ann inserted');
     }
 
 
-    getAllEntries(){
+    getAllGoals(){
 
         return new Promise((resolve, reject) => {
-            this.db.find({}, function(err, entries) {
+            this.db.find({}, function(err, goals) {
                 if(err){
                     reject(err);
                 } else {
-                    resolve(entries);
-                    console.log('function getAllEntries() returns: ', entries);
+                    resolve(goals);
+                    console.log('function getAllGoals() returns: ', goals);
                 }
             })
         })
     }
     
 
-    getEntriesByUser(authorName){
+    getGoalsByUser(authorName){
         return new Promise((resolve, reject) => {
-            this.db.find({ author: authorName }, function(err, entries) {
+            this.db.find({ author: authorName }, function(err, goals) {
                 if (err){
                     reject (err);
                 } else {
-                    resolve(entries);
-                    console.log('getEntriesByUser() returns: ', entries);
+                    resolve(goals);
+                    console.log('getGoalsByUser() returns: ', goals);
                 }
             })
         })
     }
 
-    addEntry(author, goal, details, date) {
-        var entry = {
+    addGoal(author, goal, details, complete, date) {
+        var goal = {
             author: author,
             goal: goal,
             details: details,
+            complete: complete,
             dueDate: date//new Date().toISOString().split('T')[0]
         }
-        console.log('entry created', entry);
+        console.log('goal created', goal);
 
-        this.db.insert(entry, function(err, doc) {
+        this.db.insert(goal, function(err, doc) {
             if (err) {
                 console.log('Error inserting goal', goal);
             } else {
@@ -84,10 +87,10 @@ class TrainingCalender{
         })
     }
 
-    deleteEntry(id){
+    deleteGoal(id){
         console.log('update through to model')
         this.db.remove({ _id : id}, {}, function(err, removedDocs) {
-            console.log('deleting entry');
+            console.log('deleting goal');
             if (err) {
                 console.log('error');
             } else {
@@ -96,7 +99,19 @@ class TrainingCalender{
         })
     }
 
-    updateFirstEntry(author, goal, details, date){
+    completeGoal(id){
+        console.log('update through to model')
+        this.db.update({_id: id}, { $set: { 'complete' : true } }, {}, function(err, updatedDocs) {
+            console.log('completing goal with id', id);
+            if (err) {
+                console.log('error');
+            } else {
+                console.log('documents updated:', updatedDocs)
+            }
+        })
+    }
+
+    updateFirstGoal(author, goal, details, date){
         console.log('update through to model')
         this.db.update({author: 'Peter'}, { $set: { 'author': author, 'goal': goal, 'details': details,'dueDate': date } }, {}, function(err, updatedDocs) {
             console.log('updating peters goals');

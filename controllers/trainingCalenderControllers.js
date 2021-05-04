@@ -4,24 +4,41 @@ const userDao = require('../models/userModel.js');
 const db = new trainingCalenderDAO('trainingCalender.db');
 
 exports.landing_page = function(req, res) {
-    db.getAllEntries().then((list) => {
-        res.render('entries', {
-        'title': 'Training Calender',
-        'user': req.user, 
-        'entries': list
-        });
-        console.log('promise resolved');
-        }).catch((err) => {
-        console.log('promise rejected', err);
+    try {
+        user = req.user.user;
+        console.log('getting goals by',req.user.user)
+        db.getGoalsByUser(user).then((list) => {
+            //sorts by youngest to oldest away date and removes completed goals
+            list = list.filter(goal => !(goal.complete)).sort(function(a,b){return new Date(a.dueDate) - new Date(b.dueDate);})
+            if(list.length > 5){
+                list = list.slice(0,5)
+            }
+            res.render('goals', {
+            'title': 'Home',
+            'user': req.user, 
+            'goals': list
+            });
+            console.log('promise resolved');
+            }).catch((err) => {
+            console.log('promise rejected', err);
+            })
+    } catch (err) {
+        res.render('goals',{
+            'title': 'Home'
         })
+    }
 }
 
-exports.seed_new_entries = function(req, res) {
+exports.calendar_page = function(req,res){
+    res.send('not yet implemented');
+}
+
+exports.seed_new_goals = function(req, res) {
     db.init(); 
-    db.getAllEntries().then((list) => {
-        res.render('entries', {
+    db.getAllGoals().then((list) => {
+        res.render('goals', {
         'title': 'Training Calender',
-        'entries': list
+        'goals': list
         });
         console.log('promise resolved');
         }).catch((err) => {
@@ -41,15 +58,15 @@ exports.register_page = function(req, res) {
     });
 }
 
-exports.show_user_entries = function(req, res) {
+exports.show_user_goals = function(req, res) {
     console.log('finding goals by', req.params.author);
 
     let user = req.params.author;
-    db.getEntriesByUser(user).then((entries) =>{
-        res.render('entries', {
+    db.getGoalsByUser(user).then((goals) =>{
+        res.render('goals', {
             'title': 'Training Calendar',
             'user': req.user,
-            'entries': entries
+            'goals': goals
         });
     }).catch((err) => {
         console.log('error handling author posts', err);
@@ -57,22 +74,29 @@ exports.show_user_entries = function(req, res) {
 }
 
 
-exports.new_entry = function(req, res) {
-    res.render('newEntry', {
-        'title': 'New Entry',
+exports.new_goal = function(req, res) {
+    console.log('running new goal in controller')
+    res.render('addGoal', {
+        'title': 'New Goal',
         'user' : req.user
     });
 }
 
-exports.delete_entry = function(req, res) {
+exports.delete_goal = function(req, res) {
     console.log('id being deleted',req.params.id);
-    db.deleteEntry(req.params.id);
+    db.deleteGoal(req.params.id);
     res.redirect('/');
 }
 
-exports.update_entry = function(req, res) {
-    res.render('updateEntry', {
-        'title': 'UpdateEntry'
+exports.complete_goal = function(req, res) {
+    console.log('id being completed',req.params.id);
+    db.completeGoal(req.params.id);
+    res.redirect('/');
+}
+
+exports.update_goal = function(req, res) {
+    res.render('updateGoal', {
+        'title': 'UpdateGoal'
     });
 }
 
@@ -81,28 +105,28 @@ exports.about = function(req, res) {
 }
 
 //posts
-exports.post_new_entry = function(req, res) {
+exports.post_new_goal = function(req, res) {
 
     /*if (!req.body.author) {
     response.status(400).send("Goals must have an author.");
     return;
     }*/
-    db.addEntry(req.user.user, req.body.goal, req.body.details, req.body.dueDate);
+    db.addGoal(req.user.user, req.body.goal, req.body.details, false, req.body.dueDate);
     res.redirect('/');
 }
 
-exports.post_delete_entry = function(req, res) {
+exports.post_delete_goal = function(req, res) {
 
-    db.deleteFirstEntry();
+    db.deleteFirstGoal();
     res.redirect('/');
 }
 
-exports.post_update_entry = function(req, res) {
+exports.post_update_goal = function(req, res) {
     if (!req.body.author) {
     response.status(400).send("Goals must have an author.");
     return;
     }
-    db.updateFirstEntry(req.body.author, req.body.goal, req.body.details, req.body.dueDate);
+    db.updateFirstGoal(req.body.author, req.body.goal, req.body.details, req.body.dueDate);
     res.redirect('/');
 }
 

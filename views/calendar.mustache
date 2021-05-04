@@ -8,7 +8,7 @@
         <main>
             <div class="midnav">
               <h3 class ="midbar">{{title}}</h3>
-              {{#entries}}
+              {{#goals}}
         <div class ="midbar">
             {{goal}} due for - {{dueDate}}
         </div>
@@ -19,14 +19,14 @@
             Written by <a href="/posts/{{author}}">{{author}}</a> 
         </div>
         <div class ="midbar">
-            <a href='/delete/{{_id}}' alt='delete this entry'><i class='fa fa-trash' style='font-size:24px'></i></a> 
+            <a href='/delete/{{_id}}' alt='delete this goal'><i class='fa fa-trash' style='font-size:24px'></i></a> 
         </div>
         <hr>
-    {{/entries}}
-    {{^entries}}
-    No entries yet.
+    {{/goals}}
+    {{^goals}}
+    No goals yet.
     <hr>
-    {{/entries}}
+    {{/goals}}
     <div class="text-right">
     <a href="/new" class="midbar">
         Add a goal
