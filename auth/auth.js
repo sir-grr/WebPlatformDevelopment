@@ -33,7 +33,7 @@ exports.init = function(app) {
     //For session handling we need serialize and deserialize users.
     //Simplest is just to use the 'username' field.
     passport.serializeUser(function(user, cb) {
-        cb(null, user.user);
+        cb(null, user.username);
     });
 
     passport.deserializeUser(function(id, cb) {

@@ -5,6 +5,32 @@
     <title>About Page</title>
     <link href="/styleSheet.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+      }
+    </style>
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+        const glasgow = { lat: 55.860916, lng: -4.251433 };
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 5,
+          center: glasgow,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+          position: glasgow,
+          map: map,
+        });
+      }
+    </script>
     </head>
 
     <div class="wrapper">
@@ -26,6 +52,14 @@
                 <p class ="midbar">Which means that every single day we do our very best to make achieving your goals easier.</p>
                 <p class ="midbar">FitCalender will always strive to help those struggling.</p>
                 <p class ="midbar">Especially in the trying times of the current pandemic.</p>
+            </div>
+            <div class="midbar">
+              <h3>Where We are based</h3>
+                <div id="map"></div>
+                <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjngFDq1iL0M7erStNUak0egsH3WygoMY&callback=initMap&libraries=&v=weekly"
+                async
+                ></script>
             </div>
         </main>
         <footer>

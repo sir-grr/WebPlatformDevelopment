@@ -18,29 +18,32 @@ class UserDAO {
     // for the demo the password is the bcrypt of the user name
     init() {
         this.db.insert({
-            user: 'Peter',
-            password: '$2b$10$I82WRFuGghOMjtu3LLZW9OAMrmYOlMZjEEkh.vx.K2MM05iu5hY2C'
+            username: 'Peter',
+            password: '$2b$10$I82WRFuGghOMjtu3LLZW9OAMrmYOlMZjEEkh.vx.K2MM05iu5hY2C',
+            passphrase: 'bigbigbig'
         });
         console.log('user record inserted in init');
 
         this.db.insert({
-            user: 'Ann',
-            password: '$2b$10$bnEYkqZM.MhEF/LycycymOeVwkQONq8kuAUGx6G5tF9UtUcaYDs3S'
+            username: 'Ann',
+            password: '$2b$10$bnEYkqZM.MhEF/LycycymOeVwkQONq8kuAUGx6G5tF9UtUcaYDs3S',
+            passphrase: 'dogdogdog'
         });
         console.log('user record inserted in init');
         return this;
     }
         
-    create(username, password) {
+    create(username, password, passphrase) {
         const that = this;
         bcrypt.hash(password, saltRounds).then(function(hash) {
-        var goal = {
-            user: username,
+        var entry = {
+            username: username,
             password: hash,
+            passphrase: passphrase
         };
-        console.log('user goal is: ', goal);
+        console.log('user entry is: ', entry);
 
-        that.db.insert(goal, function (err) {
+        that.db.insert(entry, function (err) {
             if (err) {
                 console.log("Can't insert user: ", username);
             }
@@ -49,15 +52,15 @@ class UserDAO {
     }
 
 
-    lookup(user, cb) {
-        this.db.find({'user': user}, function (err, goals) {
+    lookup(username, cb) {
+        this.db.find({'username': username}, function (err, entries) {
             if (err) {
                 return cb(null, null);
             } else {
-                if (goals.length == 0) {
+                if (entries.length == 0) {
                     return cb(null, null);
                 }
-                return cb(null, goals[0]);
+                return cb(null, entries[0]);
             }
         });
     }

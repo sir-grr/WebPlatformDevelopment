@@ -1,12 +1,13 @@
 const { response } = require('express');
+const randomWords = require('random-words');
 const trainingCalenderDAO = require('../models/trainingCalenderModel');
 const userDao = require('../models/userModel.js');
 const db = new trainingCalenderDAO('trainingCalender.db');
 
 exports.landing_page = function(req, res) {
     try {
-        user = req.user.user;
-        console.log('getting goals by',req.user.user)
+        user = req.user.username;
+        console.log('getting goals by',req.user.username)
         db.getGoalsByUser(user).then((list) => {
             //sorts by youngest to oldest away date and removes completed goals
             list = list.filter(goal => !(goal.complete)).sort(function(a,b){return new Date(a.dueDate) - new Date(b.dueDate);})
@@ -27,10 +28,6 @@ exports.landing_page = function(req, res) {
             'title': 'Home'
         })
     }
-}
-
-exports.calendar_page = function(req,res){
-    res.send('not yet implemented');
 }
 
 exports.seed_new_goals = function(req, res) {
@@ -73,6 +70,21 @@ exports.show_user_goals = function(req, res) {
     });
 }
 
+exports.show_passphrase_goals = function(req, res) {
+    console.log('finding goals by', req.params.passphrase);
+
+    let phrase = req.params.passphrase;
+    db.getGoalsByPhrase(phrase).then((goals) =>{
+        res.render('shareGoals', {
+            'title': 'Shared Goals',
+            'user': req.user,
+            'goals': goals
+        });
+    }).catch((err) => {
+        console.log('error handling phrase posts', err);
+    });
+}
+
 
 exports.new_goal = function(req, res) {
     console.log('running new goal in controller')
@@ -95,8 +107,22 @@ exports.complete_goal = function(req, res) {
 }
 
 exports.update_goal = function(req, res) {
+    let id = req.params.id
+    console.log('id being updated', id);
+    /*db.getGoalById(user).then((goal) =>{
+        res.render('updateGoal', {
+            'title': 'Update Goal',
+            'user': req.user,
+            'goal': goal.goal,
+            'details': goal.details,
+            'dueDate': goal.dueDate
+        });
+    }).catch((err) => {
+        console.log('error handling author posts', err);
+    });*/
     res.render('updateGoal', {
-        'title': 'UpdateGoal'
+        'title': 'Update Goal',
+        'user': req.user,
     });
 }
 
@@ -106,12 +132,12 @@ exports.about = function(req, res) {
 
 //posts
 exports.post_new_goal = function(req, res) {
-
+console.log('running post update goal in controller')
     /*if (!req.body.author) {
     response.status(400).send("Goals must have an author.");
     return;
     }*/
-    db.addGoal(req.user.user, req.body.goal, req.body.details, false, req.body.dueDate);
+    db.addGoal(req.user.username, req.body.goal, req.body.details, false, req.user.passphrase, req.body.dueDate);
     res.redirect('/');
 }
 
@@ -122,11 +148,12 @@ exports.post_delete_goal = function(req, res) {
 }
 
 exports.post_update_goal = function(req, res) {
-    if (!req.body.author) {
+    /*if (!req.body.author) {
     response.status(400).send("Goals must have an author.");
     return;
-    }
-    db.updateFirstGoal(req.body.author, req.body.goal, req.body.details, req.body.dueDate);
+    }*/
+    console.log('running post_update_goal')
+    db.updateGoal(req.user.username, req.body.goal, req.body.details, req.body.dueDate, req.params.id);
     res.redirect('/');
 }
 
@@ -136,6 +163,7 @@ exports.post_new_user = function(req, res) {
     const user = req.body.username;
     const password = req.body.psw;
     const passwordRepeat = req.body.pswrepeat;
+    let passphrase = randomWords(3).join("");
     //console.log("register user", user, "password", password);
     if (!user || !password) {
         res.send(401, 'no user or no password');
@@ -152,7 +180,7 @@ exports.post_new_user = function(req, res) {
             res.send(401, "User exists:", user);
             return;
         }
-        userDao.create(user, password);
+        userDao.create(user, password, passphrase);
         res.redirect('/login');
     });
 }

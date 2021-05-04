@@ -7,9 +7,9 @@ const router = express.Router();
 //gets
 router.get("/", controller.landing_page);
 
-router.get("/home", controller.landing_page);
+router.get('/goals', controller.landing_page);
 
-router.get('/calendar', controller.calendar_page);
+router.get("/home", controller.landing_page);
 
 router.get('/login', controller.login_page);
 
@@ -31,11 +31,11 @@ router.get('/about', controller.about);
 
 router.get('/goals/:author', ensureLoggedIn('/login'), controller.show_user_goals); 
 
-router.get('/goals/:author/:passphrase', ensureLoggedIn('/login'), controller.show_user_goals);
+router.get('/shared/goals/:passphrase', controller.show_passphrase_goals);
 //posts
 router.post('/new', ensureLoggedIn('/login'), controller.post_new_goal); 
 
-router.post('/update', controller.post_update_goal);
+router.post('/update/:id', ensureLoggedIn('/login'), controller.post_update_goal);
 
 router.post('/register', controller.post_new_user);
 

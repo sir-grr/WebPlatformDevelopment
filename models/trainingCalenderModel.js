@@ -21,6 +21,7 @@ class TrainingCalender{
             goal: 'arm Workout',
             details: '10 bicep curls, 10 push ups, 10 tricep dips',
             complete: false,
+            passphrase: 'bigbigbig',
             dueDate: '2021-05-05'
         });
     
@@ -32,6 +33,7 @@ class TrainingCalender{
             goal: 'leg Workout',
             details: '5km run',
             complete: true,
+            passphrase: 'dogdogdog',
             dueDate: '2022-04-19'
         })
     
@@ -68,12 +70,39 @@ class TrainingCalender{
         })
     }
 
-    addGoal(author, goal, details, complete, date) {
+    getGoalsByPhrase(phrase){
+        return new Promise((resolve, reject) => {
+            this.db.find({ passphrase: phrase }, function(err, goals) {
+                if (err){
+                    reject (err);
+                } else {
+                    resolve(goals);
+                    console.log('getGoalsByPhrase() returns: ', goals);
+                }
+            })
+        })
+    }
+
+    getGoalById(id){
+        return new Promise((resolve, reject) => {
+            this.db.find({ _id: id }, function(err, goal) {
+                if (err){
+                    reject (err);
+                } else {
+                    resolve(goal);
+                    console.log('getGoalById() returns: ', goal);
+                }
+            })
+        })
+    }
+
+    addGoal(author, goal, details, complete, passphrase, date) {
         var goal = {
             author: author,
             goal: goal,
             details: details,
             complete: complete,
+            passphrase: passphrase,
             dueDate: date//new Date().toISOString().split('T')[0]
         }
         console.log('goal created', goal);
@@ -111,10 +140,10 @@ class TrainingCalender{
         })
     }
 
-    updateFirstGoal(author, goal, details, date){
+    updateGoal(author, goal, details, date, id){
         console.log('update through to model')
-        this.db.update({author: 'Peter'}, { $set: { 'author': author, 'goal': goal, 'details': details,'dueDate': date } }, {}, function(err, updatedDocs) {
-            console.log('updating peters goals');
+        this.db.update({_id: id}, { $set: { 'author': author, 'goal': goal, 'details': details,'dueDate': date } }, {}, function(err, updatedDocs) {
+            console.log('updating goal', id);
             if (err) {
                 console.log('error');
             } else {

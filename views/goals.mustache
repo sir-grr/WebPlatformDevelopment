@@ -14,6 +14,8 @@
             {{#user}}
                 <div class="midnav">
                     <h3 class ="midbar">{{title}}</h3>
+                    <label>share your goals</label>
+                    <h4>localhost:3000/shared/goals/{{user.passphrase}}</h4>
                     {{#goals}}
                         <div class ="midbar">
                             {{goal}} due for - {{dueDate}}
@@ -22,13 +24,16 @@
                             {{details}}
                         </div>
                         <div class ="midbar">
-                            Written by <a href="/posts/{{author}}">{{author}}</a> 
+                            Written by <a href="/goals/{{author}}">{{author}}</a> 
                         </div>
                         <div class ="midbar">
                             <a href='/delete/{{_id}}' alt='delete this goal'><i class='fa fa-trash' style='font-size:24px'></i></a> 
                         </div>
                         <div class ="midbar">
                             <a href='/complete/{{_id}}' alt='complete this goal'><i class='fa fa-check' style='font-size:24px'></i></a> 
+                        </div>
+                        <div class ="midbar">
+                            <a href='/update/{{_id}}' alt='Update this goal'>Update</a> 
                         </div>
                         <hr>
                     {{/goals}}
