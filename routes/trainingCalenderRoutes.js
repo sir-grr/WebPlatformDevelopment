@@ -1,5 +1,6 @@
-const auth = require('../auth/auth')
 const express = require('express');
+const auth = require('../auth/auth')
+const {ensureLoggedIn} = require('connect-ensure-login'); 
 const controller = require('../controllers/trainingCalenderControllers.js'); 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.get('/logout', controller.logout);
 
 router.get('/register', controller.register_page);
 
-router.get('/new', controller.new_entry);
+router.get('/new', ensureLoggedIn('/login'), controller.new_entry);
 
 router.get('/delete/:id', controller.delete_entry);
 
@@ -27,7 +28,7 @@ router.get('/about', controller.about);
 router.get('/posts/:author', controller.show_user_entries); 
 
 //posts
-router.post('/new', controller.post_new_entry); 
+router.post('/new', ensureLoggedIn('/login'), controller.post_new_entry); 
 
 router.post('/delete', controller.post_delete_entry);
 

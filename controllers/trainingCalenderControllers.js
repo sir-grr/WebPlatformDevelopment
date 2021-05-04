@@ -59,7 +59,8 @@ exports.show_user_entries = function(req, res) {
 
 exports.new_entry = function(req, res) {
     res.render('newEntry', {
-        'title': 'NewEntry'
+        'title': 'New Entry',
+        'user' : req.user
     });
 }
 
@@ -82,11 +83,11 @@ exports.about = function(req, res) {
 //posts
 exports.post_new_entry = function(req, res) {
 
-    if (!req.body.author) {
+    /*if (!req.body.author) {
     response.status(400).send("Goals must have an author.");
     return;
-    }
-    db.addEntry(req.body.author, req.body.goal, req.body.details, req.body.dueDate);
+    }*/
+    db.addEntry(req.user.user, req.body.goal, req.body.details, req.body.dueDate);
     res.redirect('/');
 }
 

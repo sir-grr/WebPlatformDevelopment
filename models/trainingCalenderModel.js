@@ -1,4 +1,6 @@
 const nedb = require('nedb');
+const auth = require('../auth/auth')
+const {ensureLoggedIn} = require('connect-ensure-login'); 
 
 
 class TrainingCalender{
