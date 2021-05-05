@@ -7,22 +7,23 @@
     <div class="wrapper">
       {{>navbar}}
         <main>
-            <div class="midnav">
-              <h3 class ="midbar">{{title}}</h3>
+            <div class="container">
+              <h3 >{{title}}</h3>
               <form method = "post" role="/register">
                     <hr>
-                    <div id = "midbar">
+                    <div>
                       <label for="username"><b>UserName</b></label>
                       <input type="text"  class="form-control" placeholder="Enter Username" name="username" id="username" required>
                     </div>
-                    <div id = "midbar">
+                    <div>
                       <label for="psw"><b>Password</b></label>
                       <input type="password"  class="form-control" placeholder="Enter Password" name="psw" id="psw" minlength="8" required>
                     </div>
-                    <div id = "midbar">
+                    <div>
                       <label for="pswrepeat"><b>Repeat Password</b></label>
                       <input type="password"  class="form-control" placeholder="Repeat Password" name="pswrepeat" id="pswrepeat" required>
                     </div>
+                    <br />
                     <div class="form-group">
                       <input type="submit" value="Register" class="btn btn-primary">
                     </div>
@@ -31,7 +32,7 @@
             </div>
         </main>
         <footer>
-          <h4>© Treblig Inc 2021 | Thank you for visiting</h4>
+          {{>footer}}
         </footer>
     </div>
 </html>

@@ -7,29 +7,31 @@
     <div class="wrapper">
       {{>navbar}}
         <main>
-            <div class="midnav">
-              <div class="midbar">
-                <a> If you want to access the features of our sight you must login! </a>
+            <div class="container">
+              <div>
+                <p><b> If you want to access the features of our sight you must login! </b></p>
               </div>
-              <h3 class ="midbar">{{title}}</h3>
+              <h3>{{title}}</h3>
               <form method = "post" role="/login">
-                    <div id = "midbar">
+                    <hr>
+                    <div>
                       <label for="username"><b>Username</b></label>
-                      <input type="text" placeholder="Enter username" name="username" id="username" required>
+                      <input type="text" class="form-control" placeholder="Enter username" name="username" id="username" required>
                     </div>
-                    <div id = "midbar">
+                    <div>
                       <label for="password"><b>Password</b></label>
-                      <input type="password" placeholder="Enter Password" name="password" id="password" required>
+                      <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
                     </div>
-                    <div id = "midbar">
-                      <a href="/register">Not signed up? Register</a>
+                    <div>
+                      <a href="/register" class="btn btn-link">Not signed up? Register</a>
                     </div>
-                    <input type="submit" value="Sign In">
+                    <br />
+                    <input type="submit" value="Sign In" class="btn btn-primary">
               </form>
             </div>
         </main>
         <footer>
-          <h4>© Treblig Inc 2021 | Thank you for visiting</h4>
+          {{>footer}}
         </footer>
     </div>
 </html>

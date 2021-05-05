@@ -1,14 +1,19 @@
-      <header>
-        <div class="topnav">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            {{^user}}
-            <a id="login" href="/login"> Login </a>
-            <a id="register" href="/register"> Register </a>
-            {{/user}}
-            {{#user}}
-            <a id="addgoal" href="/new">Add Goal</a>
-            <a id="logout" href="/logout"> Logout </a>
-            {{/user}}
-        </div>
+
+    <header>
+        <div class="navbar navbar-default">
+            <div class="container-fluid">
+              <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                {{^user}}
+                <li><a id="login" href="/login"> Login </a></li>
+                <li><a id="register" href="/register"> Register </a></li>
+                {{/user}}
+                {{#user}}
+                <li><a id="addgoal" href="/new">Add Goal</a></li>
+                <li><a id="logout" href="/logout"> Logout </a></li>
+                {{/user}}
+              </ul>
+            </div>
+          </div>
     </header>

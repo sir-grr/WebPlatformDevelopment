@@ -6,25 +6,31 @@
     <div class="wrapper">
         {{>navbar}}
         <main>
-                <div class="midnav">
-                    <h3 class ="midbar">{{title}}</h3>
-                    {{#goals}}
-                        <div class ="midbar">
-                            {{goal}} due for - {{dueDate}}
-                        </div>
-                        <div class ="midbar">
-                            {{details}}
-                        </div>
-                        <div class ="midbar">
-                            Written by {{author}}
-                        </div>
-                        <hr>
-                    {{/goals}}
-                    {{^goals}}
-                        No goals yet.
-                        <hr>
-                    {{/goals}}           
+            <div class="container">
+                <h3 class ="midbar">{{title}}</h3>
+                <hr>
+                <div class="table-responsive">          
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Author</th>
+                            <th>Due For</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#goals}}
+                        <tr>
+                            <td>{{author}}</td>
+                            <td>{{dueDate}}</td>
+                            <td>{{details}}</td>
+                        </tr>
+                        {{/goals}}
+                        </tbody>
+                    </table>
                 </div>
+                <br/>
+            </div>
         </main>
         <footer>
             {{>footer}}

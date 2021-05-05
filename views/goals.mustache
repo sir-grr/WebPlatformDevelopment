@@ -14,52 +14,59 @@
     <div class="wrapper">
         {{>navbar}}
         <main>
-            {{^user}}
-                <div class="midbar">
-                    <a> If you want to access the features of our sight you must login! </a>
-                </div>
-                <div class="midbar">
-                    <a href="/login"> Login </a>
-                </div>
-            {{/user}}
-            {{#user}}
-                <div class="midnav">
+            <div class="container">
+                {{^user}}
+                    <div>
+                        <p> If you want to access the features of our sight you must login! </p>
+                    </div>
+                    <div>
+                        <a href="/login" class="btn btn-default">Login </a>
+                    </div>
+                {{/user}}
+                {{#user}}
                     <h3 class ="midbar">{{title}}</h3>
                     <label>share your goals</label>
-                    <div class ="midbar">
-                        <input type="text" value="{{shareUrl}}{{user.passphrase}}" id="shareLink">
-                        <button onclick="copyLink()">Copy text</button>
+                    <div class>
+                        <input class="well" type="text" value="{{shareUrl}}{{user.passphrase}}" id="shareLink">
+                        <button class="btn btn-default" onclick="copyLink()"><i class='fa fa-copy' style='font-size:24px'></i></button>
                     </div>
-                    {{#goals}}
-                        <div class ="midbar">
-                            {{goal}} due for - {{dueDate}}
-                        </div>
-                        <div class ="midbar">
-                            {{details}}
-                        </div>
-                        <div class ="midbar">
-                            Written by <a href="/goals/{{author}}">{{author}}</a> 
-                        </div>
-                        <div class ="midbar">
-                            <a href='/delete/{{_id}}' alt='delete this goal'><i class='fa fa-trash' style='font-size:24px'></i></a> 
-                        </div>
-                        <div class ="midbar">
-                            <a href='/complete/{{_id}}' alt='complete this goal'><i class='fa fa-check' style='font-size:24px'></i></a> 
-                        </div>
-                        <div class ="midbar">
-                            <a href='/update/{{_id}}' alt='Update this goal'>Update</a> 
-                        </div>
-                        <hr>
-                    {{/goals}}
+                    <hr>
+                    <div class="table-responsive">          
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Due For</th>
+                                <th>Details</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                                <th>Complete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#goals}}
+                            <tr>
+                                <td>{{author}}</td>
+                                <td>{{dueDate}}</td>
+                                <td>{{details}}</td>
+                                <td><a href='/update/{{_id}}' alt='Update this goal'><i class='fa fa-refresh' style='font-size:24px'></a></td>
+                                <td><a href='/delete/{{_id}}' alt='delete this goal'><i class='fa fa-trash' style='font-size:24px'></i></a></td>
+                                <td><a href='/complete/{{_id}}' alt='complete this goal'><i class='fa fa-check' style='font-size:24px'></i></a></td>
+                            </tr>
+                            {{/goals}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
                     {{^goals}}
-                        No goals yet.
+                        <p>No goals yet. Maybe add one<p>
                         <hr>
                     {{/goals}}
-                    <div class="text-right">
-                        <a href="/new" class="midbar"> Add a goal </a>
-                    </div>                
-                </div>
-            {{/user}}
+                    <div class="text-center">
+                        <a href="/new" class="btn btn-default"> Add a goal </a>
+                    </div>
+                {{/user}}
+            </div>
         </main>
         <footer>
             {{>footer}}

@@ -3,8 +3,13 @@
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>About Page</title>
-    <link href="/styleSheet.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="/styleSheet.css" rel="stylesheet" type="text/css"> 
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <style type="text/css">
       /* Set the size of the div element that contains the map */
       #map {
@@ -35,35 +40,41 @@
 
     <div class="wrapper">
       <header>
-        <div class="topnav">
-            <a href="/">Home</a>
-            <a href="/new">Add a Goal</a>
-            <a href="/login">Login</a>
-            
+        <div class="navbar navbar-default">
+            <div class="container-fluid">
+              <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+              </ul>
+            </div>
           </div>
     </header>
+    <body>
         <main>
-            <div class="midnav">
-              <h3 class ="midbar">About Us</h3>
-                <p class ="midbar">Here at FitCalender we believe that the key to succes is fitness.</p>
-                <p class ="midbar">This is why we have made it our mission to improve the nations fitness.</p>
-                <p class ="midbar">We do this by making fitness goals as easy to reach as possible through our site.</p>
-                <p class ="midbar">Our company values are ones of honour and compassion.</p>
-                <p class ="midbar">Which means that every single day we do our very best to make achieving your goals easier.</p>
-                <p class ="midbar">FitCalender will always strive to help those struggling.</p>
-                <p class ="midbar">Especially in the trying times of the current pandemic.</p>
+            <div class="container-fluid">
+              <h3 class ="page-header">About Us</h3>
+                <p class ="well well-lg">Here at FitCalender we believe that the key to succes is fitness.
+                This is why we have made it our mission to improve the nations fitness.
+                We do this by making fitness goals as easy to reach as possible through our site.
+                Our company values are ones of honour and compassion.
+                Which means that every single day we do our very best to make achieving your goals easier.
+                FitCalender will always strive to help those struggling.
+                Especially in the trying times of the current pandemic.</p>
             </div>
-            <div class="midbar">
-              <h3>Where We are based</h3>
-                <div id="map"></div>
+            <div class ="page-header">
+              <h3>Where we are based</h3>
+            </div>
+            <div class="embed-responsive embed-responsive-16by9">
+                <div id="map" class="embed-responsive-item"></div>
                 <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjngFDq1iL0M7erStNUak0egsH3WygoMY&callback=initMap&libraries=&v=weekly"
                 async
                 ></script>
             </div>
         </main>
+        </body>
         <footer>
-          <h4>© Treblig Inc 2021 | Thank you for visiting</h4>
+          <h4 class="footer-copyright text-center py-3">© Treblig Inc 2021 | Thank you for visiting</h4>
         </footer>
     </div>
 </html>

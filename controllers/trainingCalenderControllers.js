@@ -11,9 +11,6 @@ exports.landing_page = function(req, res) {
         db.getGoalsByUser(user).then((list) => {
             //sorts by youngest to oldest away date and removes completed goals
             list = list.filter(goal => !(goal.complete)).sort(function(a,b){return new Date(a.dueDate) - new Date(b.dueDate);})
-            if(list.length > 5){
-                list = list.slice(0,5)
-            }
             res.render('goals', {
             'title': 'Home',
             'user': req.user, 
