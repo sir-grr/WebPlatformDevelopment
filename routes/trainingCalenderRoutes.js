@@ -7,35 +7,35 @@ const router = express.Router();
 //gets
 router.get("/", controller.landing_page);
 
-router.get('/goals', controller.landing_page);
-
 router.get("/home", controller.landing_page);
 
 router.get('/login', controller.login_page);
 
 router.get('/register', controller.register_page);
 
-router.get('/logout', controller.logout);
+router.get('/logout', ensureLoggedIn('/login'), controller.logout);
 
-router.get('/new', ensureLoggedIn('/login'), controller.new_goal);
+router.get('/new', ensureLoggedIn('/login'), controller.new_plan);
 
-router.get('/update/:id', ensureLoggedIn('/login'), controller.update_goal);
+router.get('/update/:id', ensureLoggedIn('/login'), controller.update_plan);
 
-router.get('/delete/:id', controller.delete_goal);
+router.get('/delete/:id', ensureLoggedIn('/login'), controller.delete_plan);
 
-router.get('/complete/:id', controller.complete_goal);
+router.get('/complete/:id', ensureLoggedIn('/login'), controller.complete_plan);
 
-router.get('/seed', controller.seed_new_goals);
+router.get('/seed', ensureLoggedIn('/login'), controller.seed_new_plans);
 
-router.get('/about', controller.about);
+router.get('/about',  controller.about);
 
-router.get('/goals/:author', ensureLoggedIn('/login'), controller.show_user_goals); 
+router.get('/plans', ensureLoggedIn('/login'), controller.show_user_plans); 
 
-router.get('/shared/goals/:passphrase', controller.show_passphrase_goals);
+router.get('/plans/:week', ensureLoggedIn('/login'), controller.show_user_plans_by_week); 
+
+router.get('/shared/plans/:passphrase', controller.show_passphrase_plans);
 //posts
-router.post('/new', ensureLoggedIn('/login'), controller.post_new_goal); 
+router.post('/new', ensureLoggedIn('/login'), controller.post_new_plan); 
 
-router.post('/update/:id', ensureLoggedIn('/login'), controller.post_update_goal);
+router.post('/update/:id', ensureLoggedIn('/login'), controller.post_update_plan);
 
 router.post('/register', controller.post_new_user);
 

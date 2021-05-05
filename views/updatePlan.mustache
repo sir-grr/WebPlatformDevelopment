@@ -1,0 +1,43 @@
+
+<html>
+    <head>
+    {{>header}}
+    </head>
+
+    <div class="wrapper">
+      {{>navbar}}
+        <main>
+            <div class="container">
+                <h2>Update plan</h2>
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <label for="details">Name of plan</label>
+                        <input class="form-control" id="name" class="form-control" name="name" placeholder="enter plan name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan">Goal 1</label>
+                        <input type="text" class="form-control" id="goal1" class="form-control" name="goal1" placeholder="Enter goal 1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan">Goal 2</label>
+                        <input type="text" class="form-control" id="goal2" class="form-control" name="goal2" placeholder="Enter goal 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan">Goal 3</label>
+                        <input type="text" class="form-control" id="goal3" class="form-control" name="goal3" placeholder="Enter goal 3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">First day of plan</label>
+                        <input type="date" id="date" class="form-control" name="date" value="2021-04-20" min="2021-03-17" max="2100-12-31">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Post update" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer>
+          <h4>{{>footer}}</h4>
+        </footer>
+    </div>
+</html>

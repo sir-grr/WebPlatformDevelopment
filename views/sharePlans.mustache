@@ -1,0 +1,45 @@
+<html>
+    <head>
+        {{>header}}
+    </head>
+
+    <div class="wrapper">
+        {{>navbar}}
+        <main>
+            <div class="container">
+                <h3 class ="midbar">{{title}}</h3>
+                <hr>
+                <div class="table-responsive">          
+                    <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Week #</th>
+                                <th>Author</th>
+                                <th>Starting Date</th>
+                                <th>Goals</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#plans}}
+                            <tr>
+                                <td>{{week}}</td>
+                                <td>{{author}}</td>
+                                <td>{{date}}</td>
+                                <td>
+                                {{#goals}}
+                                {{info}}<br/>
+                                {{/goals}}
+                                </td>
+                        </tr>
+                        {{/plans}}
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+            </div>
+        </main>
+        <footer>
+            {{>footer}}
+        </footer>
+    </div>
+</html>

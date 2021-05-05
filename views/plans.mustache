@@ -25,45 +25,51 @@
                 {{/user}}
                 {{#user}}
                     <h3 class ="midbar">{{title}}</h3>
-                    <label>share your goals</label>
+                    <label>share all your plans</label>
                     <div class>
-                        <input class="well" type="text" value="{{shareUrl}}{{user.passphrase}}" id="shareLink">
-                        <button class="btn btn-default" onclick="copyLink()"><i class='fa fa-copy' style='font-size:24px'></i></button>
+                        <input class="list-group-item" type="text" value="{{shareUrl}}{{user.passphrase}}" id="shareLink"><br/>
+                        <button class="btn btn-default" onclick="copyLink()"><i class='fa fa-copy' style='font-size:18px'></i></button>
                     </div>
                     <hr>
                     <div class="table-responsive">          
                         <table class="table">
                             <thead>
                             <tr>
+                                <th>Week #</th>
                                 <th>Author</th>
-                                <th>Due For</th>
-                                <th>Details</th>
+                                <th>Starting Date</th>
+                                <th>Goals</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                                 <th>Complete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#goals}}
+                            {{#plans}}
                             <tr>
+                                <td><a href='/plans/{{week}}'>{{week}}</a></td>
                                 <td>{{author}}</td>
-                                <td>{{dueDate}}</td>
-                                <td>{{details}}</td>
-                                <td><a href='/update/{{_id}}' alt='Update this goal'><i class='fa fa-refresh' style='font-size:24px'></a></td>
-                                <td><a href='/delete/{{_id}}' alt='delete this goal'><i class='fa fa-trash' style='font-size:24px'></i></a></td>
-                                <td><a href='/complete/{{_id}}' alt='complete this goal'><i class='fa fa-check' style='font-size:24px'></i></a></td>
+                                <td>{{date}}</td>
+                                <td>
+                                {{#goals}}
+                                {{info}}<br/>
+                                {{/goals}}
+                                </td>
+                                <td><a href='/update/{{_id}}' alt='Update this plan'><i class='fa fa-refresh' style='font-size:24px'></a></td>
+                                <td><a href='/delete/{{_id}}' alt='delete this plan'><i class='fa fa-trash' style='font-size:24px'></i></a></td>
+                                {{^complete}}<td><a href='/complete/{{_id}}' alt='complete this plan'><i class='fa fa-check' style='font-size:24px'></i></a></td>{{/complete}}
                             </tr>
-                            {{/goals}}
+                            {{/plans}}
                             </tbody>
                         </table>
                     </div>
                     <br/>
-                    {{^goals}}
-                        <p>No goals yet. Maybe add one<p>
+                    {{^plans}}
+                        <p>No plans yet. Maybe add one<p>
                         <hr>
-                    {{/goals}}
+                    {{/plans}}
                     <div class="text-center">
-                        <a href="/new" class="btn btn-default"> Add a goal </a>
+                        <a href="/new" class="btn btn-default"> Add a plan </a>
                     </div>
                 {{/user}}
             </div>

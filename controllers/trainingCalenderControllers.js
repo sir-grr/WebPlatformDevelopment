@@ -1,44 +1,36 @@
 const { response } = require('express');
 const randomWords = require('random-words');
-const trainingCalenderDAO = require('../models/trainingCalenderModel');
+const planDAO = require('../models/planModel');
 const userDao = require('../models/userModel.js');
-const db = new trainingCalenderDAO('trainingCalender.db');
+const db = new planDAO('trainingCalender.db');
 
 exports.landing_page = function(req, res) {
     try {
         user = req.user.username;
-        console.log('getting goals by',req.user.username)
-        db.getGoalsByUser(user).then((list) => {
-            //sorts by youngest to oldest away date and removes completed goals
-            list = list.filter(goal => !(goal.complete)).sort(function(a,b){return new Date(a.dueDate) - new Date(b.dueDate);})
-            res.render('goals', {
+        console.log('getting plans by',req.user.username)
+        db.getPlansByUser(user).then((list) => {
+            //sorts by youngest to oldest away date and removes completed plans
+            list = list.filter(plan => !(plan.complete)).sort(function(a,b){return new Date(a.date) - new Date(b.date);})
+            res.render('plans', {
             'title': 'Home',
             'user': req.user, 
-            'goals': list,
-            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/goals/'
+            'plans': list,
+            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/plans/'
             });
             console.log('promise resolved');
             }).catch((err) => {
             console.log('promise rejected', err);
             })
     } catch (err) {
-        res.render('goals',{
+        res.render('plans',{
             'title': 'Home'
         })
     }
 }
 
-exports.seed_new_goals = function(req, res) {
+exports.seed_new_plans = function(req, res) {
     db.init(); 
-    db.getAllGoals().then((list) => {
-        res.render('goals', {
-        'title': 'Training Calender',
-        'goals': list
-        });
-        console.log('promise resolved');
-        }).catch((err) => {
-        console.log('promise rejected', err);
-        })
+    res.redirect('/')
 }
 
 exports.login_page = function(req, res) {
@@ -53,31 +45,47 @@ exports.register_page = function(req, res) {
     });
 }
 
-exports.show_user_goals = function(req, res) {
-    console.log('finding goals by', req.params.author);
+exports.show_user_plans = function(req, res) {
+    console.log('finding plans by', req.user.username);
 
-    let user = req.params.author;
-    db.getGoalsByUser(user).then((goals) =>{
-        res.render('goals', {
-            'title': 'Training Calendar',
+    let user = req.user.username;
+    db.getPlansByUser(user).then((plans) =>{
+        res.render('plans', {
+            'title': 'Plan Calendar ',
             'user': req.user,
-            'goals': goals,
-            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/goals/'
+            'plans': plans,
+            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/plans/'
         });
     }).catch((err) => {
         console.log('error handling author posts', err);
     });
 }
 
-exports.show_passphrase_goals = function(req, res) {
-    console.log('finding goals by', req.params.passphrase);
+exports.show_user_plans_by_week = function(req, res) {
+    console.log('finding plans by week', req.params.week);
+
+    let user = req.user.username;
+    db.getPlansByWeek(user,req.params.week).then((plans) =>{
+        res.render('plans', {
+            'title': 'Plan Calendar ',
+            'user': req.user,
+            'plans': plans,
+            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/plans/'
+        });
+    }).catch((err) => {
+        console.log('error handling author posts', err);
+    });
+}
+
+exports.show_passphrase_plans = function(req, res) {
+    console.log('finding plans by', req.params.passphrase);
 
     let phrase = req.params.passphrase;
-    db.getGoalsByPhrase(phrase).then((goals) =>{
-        res.render('shareGoals', {
-            'title': 'Shared Goals',
+    db.getPlansByPhrase(phrase).then((plans) =>{
+        res.render('sharePlans', {
+            'title': 'Shared plans',
             'user': req.user,
-            'goals': goals
+            'plans': plans
         });
     }).catch((err) => {
         console.log('error handling phrase posts', err);
@@ -85,42 +93,31 @@ exports.show_passphrase_goals = function(req, res) {
 }
 
 
-exports.new_goal = function(req, res) {
-    console.log('running new goal in controller')
-    res.render('addGoal', {
-        'title': 'New Goal',
+exports.new_plan = function(req, res) {
+    console.log('running new plan in controller')
+    res.render('addPlan', {
+        'title': 'New plan',
         'user' : req.user
     });
 }
 
-exports.delete_goal = function(req, res) {
+exports.delete_plan = function(req, res) {
     console.log('id being deleted',req.params.id);
-    db.deleteGoal(req.params.id);
+    db.deletePlan(req.params.id);
     res.redirect('/');
 }
 
-exports.complete_goal = function(req, res) {
+exports.complete_plan = function(req, res) {
     console.log('id being completed',req.params.id);
-    db.completeGoal(req.params.id);
+    db.completePlan(req.params.id);
     res.redirect('/');
 }
 
-exports.update_goal = function(req, res) {
+exports.update_plan = function(req, res) {
     let id = req.params.id
     console.log('id being updated', id);
-    /*db.getGoalById(user).then((goal) =>{
-        res.render('updateGoal', {
-            'title': 'Update Goal',
-            'user': req.user,
-            'goal': goal.goal,
-            'details': goal.details,
-            'dueDate': goal.dueDate
-        });
-    }).catch((err) => {
-        console.log('error handling author posts', err);
-    });*/
-    res.render('updateGoal', {
-        'title': 'Update Goal',
+    res.render('updatePlan', {
+        'title': 'Update plan',
         'user': req.user,
     });
 }
@@ -130,29 +127,28 @@ exports.about = function(req, res) {
 }
 
 //posts
-exports.post_new_goal = function(req, res) {
-console.log('running post update goal in controller')
-    /*if (!req.body.author) {
-    response.status(400).send("Goals must have an author.");
-    return;
-    }*/
-    db.addGoal(req.user.username, req.body.goal, req.body.details, false, req.user.passphrase, req.body.dueDate);
+exports.post_new_plan = function(req, res) {
+    console.log('running post update plan in controller')
+    let dateEntered = Date.parse(req.body.date);
+    let comparisonDate = new Date(+dateEntered);
+    comparisonDate.setHours(0, 0, 0, 0);
+    comparisonDate.setDate(comparisonDate.getDate() + 3 - (comparisonDate.getDay() + 6) % 7);
+    var firstWeek = new Date(comparisonDate.getFullYear(), 0, 4);
+    let week = (Math.round(((comparisonDate.getTime() - firstWeek.getTime()) / 86400000 - 3 + (firstWeek.getDay() + 6) % 7) / 7) +1).toString();
+    console.log(week);
+    db.addPlan(req.user.username, req.body.name, req.body.goal1, req.body.goal2, req.body.goal3, false, req.user.passphrase, week, req.body.date);
     res.redirect('/');
 }
 
-exports.post_delete_goal = function(req, res) {
-
-    db.deleteFirstGoal();
-    res.redirect('/');
-}
-
-exports.post_update_goal = function(req, res) {
-    /*if (!req.body.author) {
-    response.status(400).send("Goals must have an author.");
-    return;
-    }*/
-    console.log('running post_update_goal')
-    db.updateGoal(req.user.username, req.body.goal, req.body.details, req.body.dueDate, req.params.id);
+exports.post_update_plan = function(req, res) {
+    console.log('running post_update_plan')
+    let dateEntered = Date.parse(req.body.date);
+    let comparisonDate = new Date(+dateEntered);
+    comparisonDate.setHours(0, 0, 0, 0);
+    comparisonDate.setDate(comparisonDate.getDate() + 3 - (comparisonDate.getDay() + 6) % 7);
+    var firstWeek = new Date(comparisonDate.getFullYear(), 0, 4);
+    let week = (Math.round(((comparisonDate.getTime() - firstWeek.getTime()) / 86400000 - 3 + (firstWeek.getDay() + 6) % 7) / 7) +1).toString();
+    db.updatePlan(req.user.username, req.body.name, req.body.goal1, req.body.goal2, req.body.goal3, req.body.date, week, req.params.id);
     res.redirect('/');
 }
 
