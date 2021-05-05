@@ -44,14 +44,15 @@ router.post('/login', auth.authorize('/login'), controller.post_login)
 //handling unkowns/Server errors
 router.use(function(req, res) {
     res.status(404);
-    res.type('text/plain')
-    res.send('404 no Page Here!');
+    res.type('html');
+    res.redirect('/404Response.html');
 });
 
 router.use(function(err, req, res, next) {
     res.status(500);
-    res.type('text/plain');
-    res.send('Internal Server Error.', err);
+    res.type('html');
+    console.log(err);
+    res.redirect('/500Response.html');
 })
 
 module.exports = router;

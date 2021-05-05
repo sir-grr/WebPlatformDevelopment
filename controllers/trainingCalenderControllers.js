@@ -17,7 +17,8 @@ exports.landing_page = function(req, res) {
             res.render('goals', {
             'title': 'Home',
             'user': req.user, 
-            'goals': list
+            'goals': list,
+            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/goals/'
             });
             console.log('promise resolved');
             }).catch((err) => {
@@ -63,7 +64,8 @@ exports.show_user_goals = function(req, res) {
         res.render('goals', {
             'title': 'Training Calendar',
             'user': req.user,
-            'goals': goals
+            'goals': goals,
+            'shareUrl': req.protocol + '://' + req.get('host') + '/shared/goals/'
         });
     }).catch((err) => {
         console.log('error handling author posts', err);

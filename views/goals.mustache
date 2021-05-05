@@ -1,6 +1,14 @@
 <html>
     <head>
         {{>header}}
+    <script>
+        function copyLink() {
+            var copyText = document.getElementById("shareLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+        }
+    </script>
     </head>
 
     <div class="wrapper">
@@ -8,14 +16,20 @@
         <main>
             {{^user}}
                 <div class="midbar">
-                <a href="/login"> Login </a>
+                    <a> If you want to access the features of our sight you must login! </a>
+                </div>
+                <div class="midbar">
+                    <a href="/login"> Login </a>
                 </div>
             {{/user}}
             {{#user}}
                 <div class="midnav">
                     <h3 class ="midbar">{{title}}</h3>
                     <label>share your goals</label>
-                    <h4>localhost:3000/shared/goals/{{user.passphrase}}</h4>
+                    <div class ="midbar">
+                        <input type="text" value="{{shareUrl}}{{user.passphrase}}" id="shareLink">
+                        <button onclick="copyLink()">Copy text</button>
+                    </div>
                     {{#goals}}
                         <div class ="midbar">
                             {{goal}} due for - {{dueDate}}
