@@ -12,7 +12,7 @@ exports.landing_page = function(req, res) {
             //sorts by youngest to oldest away date and removes completed plans
             list = list.filter(plan => !(plan.complete)).sort(function(a,b){return new Date(a.date) - new Date(b.date);})
             res.render('plans', {
-            'title': 'Home',
+            'title': 'Incomplete Plans',
             'user': req.user, 
             'plans': list,
             'shareUrl': req.protocol + '://' + req.get('host') + '/shared/plans/'
@@ -67,7 +67,7 @@ exports.show_user_plans_by_week = function(req, res) {
     let user = req.user.username;
     db.getPlansByWeek(user,req.params.week).then((plans) =>{
         res.render('plans', {
-            'title': 'Plan Calendar ',
+            'title': 'Plan Calendar for week ' + req.params.week,
             'user': req.user,
             'plans': plans,
             'shareUrl': req.protocol + '://' + req.get('host') + '/shared/plans/'

@@ -23,11 +23,11 @@ class TrainingCalender{
             passphrase: 'bigbigbig',
             week: '5',
             goals: [{
-                info: '10km run'
+                info: '10km run',
             },{
-                info: '10 squats'
+                info: '10 squats',
             },{
-                info: '10 lunges'
+                info: '10 lunges',
             }],
             date: '2021-05-05'
         });
@@ -42,11 +42,11 @@ class TrainingCalender{
             passphrase: 'dogdogdog',
             week: '9',
             goals: [{
-                info: '20 pushups'
+                info: '20 pushups',
             },{
-                info: '20 pullups'
+                info: '20 pullups',
             },{
-                info: '20 punches'
+                info: '20 punches',
             }],
             date: '2022-04-19'
         })
@@ -131,11 +131,11 @@ class TrainingCalender{
             passphrase: passphrase,
             week: week,
             goals: [{
-                info: goal1
+                info: goal1,
             },{
-                info: goal2
+                info: goal2,
             },{
-                info: goal3
+                info: goal3,
             }],
             date: date
         }
@@ -181,11 +181,11 @@ class TrainingCalender{
             name: name,
             week: week,
             goals: [{
-                info: goal1
+                info: goal1,
             },{
-                info: goal2
+                info: goal2,
             },{
-                info: goal3
+                info: goal3,
             }],
             date: date
         } }, {}, function(err, updatedDocs) {
