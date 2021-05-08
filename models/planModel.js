@@ -97,19 +97,6 @@ class TrainingCalender{
         })
     }
 
-    getPlanById(id){
-        return new Promise((resolve, reject) => {
-            this.db.find({ _id: id }, function(err, plan) {
-                if (err){
-                    reject (err);
-                } else {
-                    resolve(plan);
-                    console.log('getPlanById() returns: ', plan);
-                }
-            })
-        })
-    }
-
     getPlansByWeek(author,week){
         return new Promise((resolve, reject) => {
             this.db.find({ author: author, week: week }, function(err, plan) {

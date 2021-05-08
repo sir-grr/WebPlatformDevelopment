@@ -28,10 +28,10 @@ exports.landing_page = function(req, res) {
     }
 }
 
-exports.seed_new_plans = function(req, res) {
+/*exports.seed_new_plans = function(req, res) {
     db.init(); 
     res.redirect('/')
-}
+}*/
 
 exports.login_page = function(req, res) {
     res.render('user/login', {

@@ -23,7 +23,7 @@ router.get('/delete/:id', ensureLoggedIn('/login'), controller.delete_plan);
 
 router.get('/complete/:id', ensureLoggedIn('/login'), controller.complete_plan);
 
-router.get('/seed', ensureLoggedIn('/login'), controller.seed_new_plans);
+//router.get('/seed', ensureLoggedIn('/login'), controller.seed_new_plans);
 
 router.get('/about',  controller.about);
 
